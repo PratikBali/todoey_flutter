@@ -20,13 +20,9 @@ class _TaskTileState extends State<TaskTile> {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        'This is a task',
-        style: TextStyle(
-            decoration:
-                isChecked ? TextDecoration.lineThrough : TextDecoration.none),
-      ),
-      trailing: TaskCheckBox(
-          checkBoxState: isChecked, toggleCheckboxState: toggleCheckBox),
+      'This is a task',
+      style: TextStyle(decoration: isChecked ? TextDecoration.lineThrough : TextDecoration.none),),
+      trailing: TaskCheckBox(checkBoxState: isChecked, toggleCheckboxState: toggleCheckBox),
     );
   }
 }
@@ -43,9 +39,7 @@ class TaskCheckBox extends StatelessWidget {
       activeColor: Colors.lightBlueAccent,
       value: checkBoxState,
       // onChanged: toggleCheckboxState,
-      onChanged: (value) {
-        toggleCheckboxState(value);
-      },
+      onChanged: (value) => toggleCheckboxState(value)
     );
   }
 }
