@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AddTaskScreen extends StatelessWidget {
-  const AddTaskScreen({super.key});
+  // 9 addTaskCallback function
+  final Function addTaskCallback;
+  // 10 initialize constructor for addTaskCallback
+  AddTaskScreen(this.addTaskCallback);
+
+  final messageTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    // 5 add newTaskTitle
+    String newTaskTitle = '';
     return Container(
       // height: 400,
-      color: Color(0xff757575),
+      color: const Color(0xff757575),
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: const BoxDecoration(
@@ -16,7 +23,7 @@ class AddTaskScreen extends StatelessWidget {
               topLeft: Radius.circular(20), topRight: Radius.circular(20)),
         ),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -31,17 +38,26 @@ class AddTaskScreen extends StatelessWidget {
               TextField(
                 autofocus: true,
                 textAlign: TextAlign.center,
+                controller: messageTextController,
                 decoration: InputDecoration(
                   hintText: 'Enter your task name'
                 ),
+                // 6 add method to set newTaskTitle
+                onChanged: (value) {
+                  newTaskTitle = value;
+                }
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlueAccent,
-
                 ),
-                onPressed: () => {},
-                child: Text('Add'),
+                onPressed: () => {
+                // 8 addTaskCallback to send newTaskTitle
+                //   print('newTaskTitle: $newTaskTitle')
+                messageTextController.clear(),
+                addTaskCallback(newTaskTitle)
+                },
+                child: const Text('Add'),
               ),
             ],
           ),
