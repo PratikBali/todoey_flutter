@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todoey_flutter/model/tasks_model.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey_flutter/model/tasks_data.dart';
 import 'package:todoey_flutter/widgets/tasks_list.dart';
 import 'add_task_screen.dart';
 
@@ -11,36 +12,22 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  // 3 lifting up the states of task list -> task screen
-  List<Task> tasks = [
-    Task(name: 'buy helicopter'),
-    Task(name: 'buy casino'),
-    Task(name: 'buy amdocs'),
-  ];
-
   @override
   Widget build(BuildContext context) {
+
+    var taskData = Provider.of<TaskData>(context);
+
     return Scaffold(
       backgroundColor: Colors.lightBlueAccent,
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.lightBlueAccent,
-          child: const Icon(Icons.add, color: Colors.white,),
-          onPressed: () {
-            showModalBottomSheet(
-                context: context,
-                builder: (BuildContext context) =>
-                  // 7 create callback to setState of newly added task from AddTaskScreen
-                  AddTaskScreen(
-                  (newTaskTitle) {
-                    print('newTaskTitle2: $newTaskTitle');
-                    setState(() {
-                      tasks.add(Task(name: newTaskTitle));
-                    });
-                    Navigator.pop(context);
-                  }
-                )
-            );
-          },
+        child: const Icon(Icons.add, color: Colors.white,),
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) => AddTaskScreen()
+          );
+        }
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +56,8 @@ class _TaskScreenState extends State<TaskScreen> {
                 ),
                 Text(
                   // 11 add length of tasks
-                  '${tasks.length} Tasks',
+                  // '${tasks.length} Tasks',
+                  '${taskData.tasksCount} Tasks',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -87,7 +75,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20)),
               ),
-              child: TasksList(tasks), //  4 pass tasks here
+              child: TasksList(), //  4 pass tasks here
             ),
           )
         ],
@@ -96,5 +84,13 @@ class _TaskScreenState extends State<TaskScreen> {
   }
 }
 
-
+// AddTaskScreen(
+// (newTaskTitle) {
+// print('newTaskTitle2: $newTaskTitle');
+// // setState(() {
+// //   taskData.tasks.add(Task(name: newTaskTitle));
+// // });
+// Navigator.pop(context);
+// }
+// )
 
